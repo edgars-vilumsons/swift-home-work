@@ -13,7 +13,7 @@ let words: [String] = ["xcode", "ios", "playground", "iphone", "ipad", "device"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         let wordLabel = UILabel()
         wordLabel.text = words.randomElement()
         wordLabel.textAlignment = .center
@@ -21,6 +21,13 @@ let words: [String] = ["xcode", "ios", "playground", "iphone", "ipad", "device"]
         wordLabel.font = .systemFont(ofSize: 36, weight: .bold)
         wordLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(wordLabel)
+        
+        let magicButton = UIButton(type: .system)
+        magicButton.setTitle("Magic Button", for: .normal)
+        magicButton.backgroundColor = .white
+        magicButton.translatesAutoresizingMaskIntoConstraints = false
+        magicButton.addTarget(self, action: #selector(onTap), for: .touchUpInside)
+        view.addSubview(magicButton)
         
         let widthConstraint = NSLayoutConstraint(
             item: wordLabel,
@@ -56,8 +63,36 @@ let words: [String] = ["xcode", "ios", "playground", "iphone", "ipad", "device"]
             attribute: .centerY,
             multiplier: 1,
             constant: 0)
-
-        NSLayoutConstraint.activate([widthConstraint, heightConstraint, xConstraint, yConstraint])
+        
+        NSLayoutConstraint.activate([
+            widthConstraint,
+            heightConstraint,
+            xConstraint,
+            yConstraint,
+            magicButton.widthAnchor.constraint(equalToConstant: 150),
+            magicButton.heightAnchor.constraint(equalToConstant: 50),
+            magicButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            magicButton.centerYAnchor.constraint(equalTo: wordLabel.topAnchor, constant: +400)])
+        
+        changeBackgroundColor()
+        }
+    
+    @objc func onTap() {
+        changeBackgroundColor()
     }
-}
+    
+    func changeBackgroundColor() {
+            view.backgroundColor = UIColor(
+                red: .random(in: 0...1),
+                green: .random(in: 0...1),
+                blue: .random(in: 0...1),
+                alpha: 1
+            )
+        }
+    
+    }
+
+    
+
+
 
